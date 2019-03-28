@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './SettingsPage.css';
+import '../styles/index.scss';
 
 const SettingsPage = (props) => {
   const {startGame, changeWidth, changeHeight} = props;
   return (
-    <div className="app__main">
-      <form className="app__form">
-        <label className="app__label" htmlFor="field-width">Set up field width</label>
-        <input className="app__field" name="width" type="text" id="field-width" placeholder="0" autoFocus onChange={changeWidth}></input>
-        <label className="app__label" htmlFor="field-height">Set up field height</label>
-        <input className="app__field" name="height" type="text" id="field-height" placeholder="0" onChange={changeHeight}></input>
+    <section className="settings main__section">
+      <h2 className="title settings__title">Please, set up horizontal and vertical table size. Enter your data and push Start button.</h2>
+      <form className="settings__form">
+        <label className="settings__label" htmlFor="field-width">Width
+          <input className="settings__field" name="width" type="text" id="field-width" placeholder="0" autoFocus onChange={changeWidth}></input>
+        </label>
+        <label className="settings__label" htmlFor="field-height">Height
+          <input className="settings__field" name="height" type="text" id="field-height" placeholder="0" onChange={changeHeight}></input>
+        </label>
       </form>
-      <button className="btn app__settings" onClick={startGame}>Start</button>
-    </div>
+      <button className="btn settings__btn" onClick={startGame}>Start</button>
+    </section>
   );
 };
 

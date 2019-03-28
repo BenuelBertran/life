@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MainPage from "./MainPage.js";
 import SettingsPage from "./SettingsPage.js";
 import GamePage from "./GamePage.js";
-import './App.css';
+import '../styles/index.scss';
 
 class App extends Component {  
   state = {
@@ -61,8 +61,8 @@ class App extends Component {
   render() {
     const {isGame, isSettings, isMain, width, height, cellsState} = this.state;
     return (
-      <div className="App">
-        <main className="App__main">
+      <div className="app">
+        <main className="main app__main">
           {isMain
             ? <MainPage
                 newGame={this.toSettingsPage}

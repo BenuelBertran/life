@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './Table.css';
+import '../styles/index.scss';
 import Cell from "./Cell.js";
 
 class Table extends Component {
@@ -27,7 +27,7 @@ class Table extends Component {
     })
     //Отрисовывает тиблицу на странице 
     return (
-      <div className="table app__table">
+      <div className="table game__table">
         {grid}
       </div>
     )

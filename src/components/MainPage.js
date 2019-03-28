@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './MainPage.css';
+import '../styles/index.scss';
 
 class MainPage extends Component {
   state = {
-    isActive: false
+    isHidden: true
   }
 
   closeModal = () => {
@@ -12,7 +12,7 @@ class MainPage extends Component {
     let close = (e) => {
       if (e.keyCode === escKeycode) {
         this.setState ({
-          isActive: false
+          isHidden: true
         })
         window.removeEventListener("keydown", close);
       }
@@ -24,14 +24,14 @@ class MainPage extends Component {
   loadGameList = () => {
     this.closeModal();
     this.setState ({
-      isActive: true
+      isHidden: false
     })
   };
   //Передаёт выбранную игру для загрузки
   itemHandler = (e) => {
     const {loadGame} = this.props;
     this.setState ({
-      isActive: false
+      isHidden: true
     })
     let selected = e.currentTarget.innerText;
     loadGame(selected);
@@ -45,32 +45,32 @@ class MainPage extends Component {
       }
     }
     const {newGame} = this.props;
-    const {isActive} = this.state;
+    const {isHidden} = this.state;
     return (
-      <div className="app__main">
-        <p className="app__main--text">Welcome to city 17!
+      <section className="menu main__section">
+        <h2 className="title menu__title">Welcome to city 17!
           <br></br>
             Create your own Life and proud yourself.
           <br></br>
           Push Start button and play.
           <br></br> 
-          Load button for rebirth old population.
-        </p>
-        <button className="btn app__main--window1" onClick={newGame}>Start new game</button>
-        <div className={isActive
-            ? "mainPage__load--active"
-            : "mainPage__load"
-          }>
-          <ol className="mainPage__list">
-            {
-              array.map((game, index) => {
-              return <li className="mainPage__item" key={index} onClick={this.itemHandler}>{game}</li>
-              })
-            }
-          </ol>
-        </div>
-        <button className="btn app__main--window1" onClick={this.loadGameList}>Load game</button>
-      </div>
+          Push Load button to revive old population.
+        </h2>
+        <button className="btn menu__btn" onClick={newGame}>Start new game</button>
+        <button className="btn menu__btn" onClick={this.loadGameList}>Load game</button>
+        {
+          !isHidden && 
+          <div className="modal menu__modal">
+            <ol className="menu__list">
+              {
+                array.map((game, index) => {
+                return <li className="menu__item" key={index} onClick={this.itemHandler}>{game}</li>
+                })
+              }
+            </ol>
+          </div>
+        }
+      </section>
     )
   }
 };

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Table from "./Table.js";
-import './App.css';
+import '../styles/index.scss';
 
 class GamePage extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class GamePage extends Component {
     this.state = {
       tableState: cellsState,
       isPlaying: false,
-      isActive: false,
+      isHidden: true,
       gameName: "",
       game: {},
       generation: []
@@ -95,7 +95,7 @@ class GamePage extends Component {
       })
   };
   //Передаёт имя нового сохранения
-  changeHandler = (e) => {
+  gameNameHandler = (e) => {
     this.setState ({
       gameName: e.currentTarget.value
     })
@@ -103,7 +103,7 @@ class GamePage extends Component {
   //Отображает окно сохранения игры по клику
   saveGame = () => {
     this.setState ({
-      isActive: true
+      isHidden: false
     })
   };
   //Сохраняет игру
@@ -117,7 +117,7 @@ class GamePage extends Component {
     localStorage.setItem(gameName, JSON.stringify(game));
     
     this.setState ({
-      isActive: false
+      isHidden: true
     })
   };
   //Запускает\Останавливает игру по клику по кнопке
@@ -135,25 +135,25 @@ class GamePage extends Component {
 
   render() {
     const {width, height} = this.props;
-    const {isActive, tableState} = this.state;
+    const {isHidden, tableState, gameName} = this.state;
     return (
-      <React.Fragment>
+      <section className="game main__section">
         <Table
           rows={width}
           cols={height}
           tableState={tableState}
           changeCellState={this.changeCellState}
         />
-        <div className={isActive
-            ? "app__save-wrapper--active"
-            : "app__save-wrapper"
-          }>
-          <input className="app__input" name="save" type="text" value={this.state.gameName} placeholder="New save" onChange={this.changeHandler}></input>
-          <button className="app__save-apply" onClick={this.saveGameApply}>save</button>
-        </div>
-        <button className="btn app__play" onClick={this.gamePlaying}>Make Life</button>
-        <button className="btn app__save" onClick={this.saveGame}>Save game</button>
-      </React.Fragment>
+        <button className="btn game__btn" onClick={this.gamePlaying}>Make Life</button>
+        <button className="btn game__btn" onClick={this.saveGame}>Save game</button>
+        {
+          !isHidden && 
+          <div className="modal game__modal">
+            <input className="game__input" name="saveGame" type="text" value={gameName} placeholder="New save" onChange={this.gameNameHandler}></input>
+            <button className="btn game__btn" onClick={this.saveGameApply}>save</button>
+          </div>
+        }
+      </section>
     )
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import './Cell.css';
+import '../styles/index.scss';
 
 class Cell extends Component {
   //Отправляет свои координаты в колбек для смены состояния
@@ -14,8 +14,8 @@ class Cell extends Component {
     return (
       <div 
       	className={isAlive
-          ? "app__cell--alive"
-          : "app__cell"
+          ? "table__cell table__cell--green"
+          : "table__cell"
         }
       	onClick={this.cellHandler}	
       >

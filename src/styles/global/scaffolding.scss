@@ -1,0 +1,16 @@
+//Основа
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: $mobile;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  font-size: calc(10px + 2vmin);
+  line-height: $normal-height;
+  font-weight: $normal-weight;
+  color: $main-text;
+  text-align: center;
+  
+  background-color: $main-bg;
+}
