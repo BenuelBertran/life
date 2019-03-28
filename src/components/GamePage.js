@@ -22,7 +22,8 @@ class GamePage extends Component {
       isPlaying: false,
       isActive: false,
       gameName: "",
-      game: {}
+      game: {},
+      generation: []
     };
   };
   //Меняет состояние ячейки при клике
@@ -33,7 +34,7 @@ class GamePage extends Component {
   };
   //Генерирует новое поколение через 1 секунду
   nextGeneration = () => {
-    const {tableState} = this.state;
+    const {tableState, generation} = this.state;
     const newTableState = JSON.parse(JSON.stringify(tableState));
     let live = 0;
       for (let i = 0; i < this.props.width; i++) {
@@ -80,6 +81,7 @@ class GamePage extends Component {
         this.gamePlaying();
         alert("Dear friend, your population gone to dead end, Life is over. Have fun and good luck next time");
       }
+      generation.push(newTableState);
       this.setState ({
         tableState: newTableState
       })
@@ -112,7 +114,8 @@ class GamePage extends Component {
   };
   //Запускает\Останавливает игру по клику по кнопке
   gamePlaying = () => {
-    const {isPlaying} = this.state;
+    const {isPlaying, generation} = this.state;
+    console.log(generation);
     
     if (isPlaying) {
       clearInterval(this.timer);
@@ -149,8 +152,8 @@ class GamePage extends Component {
 }
 
 GamePage.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  width: PropTypes.string.isRequired,
+  height: PropTypes.string.isRequired,
   cellsState: PropTypes.array.isRequired
 };
 

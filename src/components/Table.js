@@ -35,8 +35,8 @@ class Table extends Component {
 };
 
 Table.propTypes = {
-  rows: PropTypes.number.isRequired,
-  cols: PropTypes.number.isRequired,
+  rows: PropTypes.string.isRequired,
+  cols: PropTypes.string.isRequired,
   tableState: PropTypes.array.isRequired,
   changeCellState: PropTypes.func.isRequired
 };

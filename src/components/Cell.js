@@ -25,7 +25,6 @@ class Cell extends Component {
 };
 
 Cell.propTypes = {
-  key: PropTypes.number,
   row: PropTypes.number.isRequired,
   col: PropTypes.number.isRequired,
   isAlive: PropTypes.bool.isRequired,
