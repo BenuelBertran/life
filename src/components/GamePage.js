@@ -73,6 +73,7 @@ class GamePage extends Component {
           }
         }
       }
+      //Проверки: если все ячейки мертвы/больше не меняются/повторяются конфигурации
       if (!live) {
         this.gamePlaying();
         alert("Dear friend, all your population are dead, Life is over. Have fun and good luck next time");
@@ -80,6 +81,12 @@ class GamePage extends Component {
       if (JSON.stringify(tableState) === JSON.stringify(newTableState)) {
         this.gamePlaying();
         alert("Dear friend, your population gone to dead end, Life is over. Have fun and good luck next time");
+      } else
+      for (let i = 0; i < generation.length; i++) {
+        if (JSON.stringify(generation[i]) === JSON.stringify(newTableState)) {
+          this.gamePlaying();
+          alert("Dear friend, your population found itself in the wheel of sansara, Life is over. Have fun and good luck next time");
+        }  
       }
       generation.push(newTableState);
       this.setState ({
