@@ -1,0 +1,13 @@
+.table {
+  display: table;
+  border-collapse: collapse;
+/*  background-color: gray;*/
+  margin-bottom: 10px;
+}
+
+.table__row {
+/*  background-color: red;*/
+/*  width: 10px;*/
+  display: table-row;
+/*  border: 1px dashed red;*/
+}

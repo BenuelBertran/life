@@ -1,0 +1,32 @@
+.app__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.app__label {
+  padding-bottom: 10px;
+}
+
+.app__field {
+  margin-left: 10px;
+  padding: 5px;
+  width: 50px;
+  height: 30px;
+  font-size: inherit;
+}
+
+.app__settings {
+  width: 100px;
+  height:100px;
+  border: 1px solid lightgray;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.app__settings:hover {
+  border: 1px solid gray;
+}
