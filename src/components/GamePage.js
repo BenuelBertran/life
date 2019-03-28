@@ -26,6 +26,7 @@ class GamePage extends Component {
       generation: []
     };
   };
+  
   //Меняет состояние ячейки при клике
   changeCellState = (row, col) => {
     const {tableState} = this.state;
@@ -121,8 +122,7 @@ class GamePage extends Component {
   };
   //Запускает\Останавливает игру по клику по кнопке
   gamePlaying = () => {
-    const {isPlaying, generation} = this.state;
-    console.log(generation);
+    const {isPlaying} = this.state;
     
     if (isPlaying) {
       clearInterval(this.timer);

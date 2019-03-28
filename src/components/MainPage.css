@@ -34,16 +34,17 @@
 .mainPage__load--active {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   position: fixed;
-  top: 200px;
+  width: 100px;
+  height: 200px;
+  top: 30%;
 
   background-color: #ffffff;
   border: 1px solid black;
-  padding: 40px;
-  padding-left: 60px;
+  padding: 20px;
+  padding-left: 40px;
   cursor: pointer;
 }
 

@@ -4,19 +4,34 @@ import './MainPage.css';
 
 class MainPage extends Component {
   state = {
-    isLoaded: false
+    isActive: false
   }
-  //Показывает список сохранёнок
+
+  closeModal = () => {
+    const escKeycode = 27;
+    let close = (e) => {
+      if (e.keyCode === escKeycode) {
+        this.setState ({
+          isActive: false
+        })
+        window.removeEventListener("keydown", close);
+      }
+    }
+    window.addEventListener("keydown", close);
+  };
+
+  //Открывает список сохранёнок
   loadGameList = () => {
+    this.closeModal();
     this.setState ({
-      isLoaded: true
+      isActive: true
     })
   };
   //Передаёт выбранную игру для загрузки
   itemHandler = (e) => {
     const {loadGame} = this.props;
     this.setState ({
-      isLoaded: false
+      isActive: false
     })
     let selected = e.currentTarget.innerText;
     loadGame(selected);
@@ -30,7 +45,7 @@ class MainPage extends Component {
       }
     }
     const {newGame} = this.props;
-    const {isLoaded} = this.state;
+    const {isActive} = this.state;
     return (
       <div className="app__main">
         <p className="app__main--text">Welcome to city 17!
@@ -42,7 +57,7 @@ class MainPage extends Component {
           Load button for rebirth old population.
         </p>
         <button className="btn app__main--window1" onClick={newGame}>Start new game</button>
-        <div className={isLoaded
+        <div className={isActive
             ? "mainPage__load--active"
             : "mainPage__load"
           }>
