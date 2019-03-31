@@ -1,27 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/index.scss';
 
-class Cell extends Component {
-  //Отправляет свои координаты в колбек для смены состояния
-  cellHandler = () => {
-    const {changeCellState, row, col} = this.props;
-    changeCellState(row, col);
-  }
-
-  render() {
-    const {isAlive} = this.props;
-    return (
-      <div 
-      	className={isAlive
-          ? "table__cell table__cell--green"
-          : "table__cell"
-        }
-      	onClick={this.cellHandler}	
-      >
-      </div>
-    );
-  }
+const Cell = (props) => {
+  const {isAlive, changeCellState, row, col} = props;
+  
+  return (
+    <div 
+      className={isAlive
+        ? "table__cell table__cell--green"
+        : "table__cell"
+      }
+      onClick={changeCellState.bind(this, row, col)}	
+    >
+    </div>
+  );
 };
 
 Cell.propTypes = {
