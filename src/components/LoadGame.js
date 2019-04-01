@@ -18,6 +18,8 @@ const LoadGame = (props) => {
   
   return (
     <div className="modal menu__modal">
+      <h3 className="title menu__title">Click to load game in a list
+      </h3>
       <ol className="menu__list">
         {loadGameList}
       </ol>

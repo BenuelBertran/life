@@ -7,6 +7,7 @@ class App extends Component {
   constructor() {
     super();
     this.initialSize = 5;
+    this.animationSpeed = 1000;
     
     this.state = {
       rows: this.initialSize,
@@ -38,7 +39,7 @@ class App extends Component {
     }
     window.addEventListener("keydown", close);
   };
-
+  
   showModal = (modalName) => {
     this.closeModal();
     this.setState ({
@@ -161,14 +162,13 @@ class App extends Component {
   //Запускает\Останавливает игру по клику по кнопке
   animationToggle = () => {
     const {isAnimate} = this.state;
-    const animationSpeed = 1000;
     
     if (isAnimate) {
       clearInterval(this.timer);
       this.setState ({isAnimate: false, generation: []});
     } else {
       this.setState ({isAnimate: true});
-      this.timer = setInterval(this.getNextState, animationSpeed);
+      this.timer = setInterval(this.getNextState, this.animationSpeed);
     }
   };
 

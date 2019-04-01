@@ -11,36 +11,37 @@ const Menu = (props) => {
   
   return (
     <section className="menu main__section">
-      <h2 className="title menu__title screen-readers-only">Please, set up horizontal and vertical table size. Enter your data and push Start button.
+      <h2 className="title menu__title">Conway's Game of Life v1.0
       </h2>
+      <p className="menu__subtitle">To start playing, click cells on the game field and then push the Start/Stop button.</p>
       <Button
-        className="btn start__btn"
+        className="btn menu__btn"
         name="newField"
         value="set new field"
         callback={showModal.bind(this, "isNewField")}
       />
       <Button
-        className="btn reset__btn"
+        className="btn menu__btn"
         name="resetField"
         value="reset field"
         callback={resetGameField.bind(this, null, null)}
       />
       <Button
-        className="btn game__btn save"
+        className="btn menu__btn"
         name="saveGame"
         value="save game"
         callback={showModal.bind(this, "isSaveGame")}
       />
       <Button
-        className="btn menu__btn load"
+        className="btn menu__btn"
         name="loadGame"
         value="load game"
         callback={showModal.bind(this, "isLoadGame")}
       />
       <Button
-        className="btn menu__btn play"
+        className="btn menu__btn menu__btn--animation"
         name="playGame"
-        value="start/stop animation"
+        value="life"
         callback={animationToggle}
       /> 
       {!isHidden && isNewField &&

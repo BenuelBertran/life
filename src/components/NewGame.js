@@ -18,19 +18,17 @@ const NewGame = (props) => {
   };
   
   return (
-    <div className="modal game__modal">
-      <h2 className="title menu__title">Please, set up horizontal and vertical table size. Enter your data and push Start button.
-      </h2>
-      <form className="settings__form">
-        <label className="settings__label" htmlFor="field-rows">Rows
-          <input className="settings__field" name="rows" type="number" id="field-rows" placeholder="0" autoFocus onChange={rowsHandler}></input>
-        </label>
-        <label className="settings__label" htmlFor="field-cols">Cols
-          <input className="settings__field" name="cols" type="number" id="field-cols" placeholder="0" onChange={colsHandler}></input>
-        </label>
+    <div className="modal menu__modal">
+      <h3 className="title menu__title">Please, set up field size and click Ok
+      </h3>
+      <form className="menu__form">
+        <label className="menu__label" htmlFor="field-rows">Rows</label>
+        <input className="menu__input" name="rows" type="text" id="field-rows" maxLength="1" placeholder="0" autoFocus onChange={rowsHandler}></input>
+        <label className="menu__label" htmlFor="field-cols">Cols</label>
+        <input className="menu__input" name="cols" type="text" id="field-cols" maxLength="1" placeholder="0" onChange={colsHandler}></input>
       </form>
       <Button
-        className="btn settings__btn"
+        className="btn menu__btn"
         name="apply"
         value="Ok"
         callback={resetFieldHandler}

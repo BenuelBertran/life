@@ -15,10 +15,12 @@ const NewGame = (props) => {
   };
 
   return (
-    <div className="modal game__modal">
-      <input className="game__input" name="saveGame" type="text" placeholder="New save" onChange={gameNameHandler}></input>
+    <div className="modal menu__modal">
+      <h3 className="title menu__title">Enter game name and click Save
+      </h3>
+      <input className="menu__input menu__input--save" name="saveGame" type="text" placeholder="New save" onChange={gameNameHandler}></input>
       <Button
-        className="btn game__btn"
+        className="btn menu__btn"
         name="save"
         value="save"
         callback={saveGameHandler}
