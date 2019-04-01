@@ -4,25 +4,23 @@ import Game from "./Game.js";
 import '../styles/index.scss';
 
 class App extends Component {
-  state = {
-    rows: 5,
-    cols: 5,
-    newRows: 0,
-    newCols: 0,
-    stateTable: [],
-    gameName: "",
-    game: {},
-    isNewGame: true,
-    isHidden: true,
-    isNewField: false,
-    isSaveGame: false,
-    isLoadGame: false
-  };
-  
-  generateState = (stateTable) => {
-    this.setState ({
-      stateTable: stateTable
-    })
+  constructor() {
+    super();
+    this.initialSize = 5;
+    
+    this.state = {
+      rows: this.initialSize,
+      cols: this.initialSize,
+      stateTable: [],
+      game: {},
+      generation: [],
+      isNewGame: true,
+      isHidden: true,
+      isNewField: false,
+      isSaveGame: false,
+      isLoadGame: false,
+      isAnimate: false
+    };
   };
 
   closeModal = () => {
@@ -41,63 +39,27 @@ class App extends Component {
     window.addEventListener("keydown", close);
   };
 
-  newFieldHandler = () => {
+  showModal = (modalName) => {
     this.closeModal();
     this.setState ({
       isHidden: false,
-      isNewField: true
+      [modalName]: true
     })
   };
 
-  saveGameHandler = () => {
-    this.closeModal();
+  resetGameField = (rows, cols) => {
     this.setState ({
-      isHidden: false,
-      isSaveGame: true
-    })
-  };
-
-  loadGameHandler = () => {
-    this.closeModal();
-    this.setState ({
-      isHidden: false,
-      isLoadGame: true
-    })
-  };
-
-  rowsHandler = (e) => {
-    this.setState ({
-      newRows: +e.currentTarget.value
-    })
-  };
-
-  colsHandler = (e) => {
-    this.setState ({
-      newCols: +e.currentTarget.value
-    })
-  };
-
-  resetGameField = () => {
-    const {newRows, newCols} = this.state;
-    this.setState ({
-      rows: newRows || 5,
-      cols: newCols || 5,
+      rows: rows || this.initialSize,
+      cols: cols || this.initialSize,
       isNewGame: true,
       isHidden: true,
       isNewField: false
     })
   };
 
-  //Передаёт имя нового сохранения
-  gameNameHandler = (e) => {
-    this.setState ({
-      gameName: e.currentTarget.value
-    })
-  };
-
   //Сохраняет игру
-  saveNewGame = () => {
-    const {rows, cols, stateTable, game, gameName} = this.state;
+  saveNewGame = (gameName) => {
+    const {rows, cols, stateTable, game} = this.state;
     
     game.name = gameName
     game.state = stateTable;
@@ -127,6 +89,89 @@ class App extends Component {
     })
   };
 
+  showMessage = (rule) => {
+    switch(rule) {
+      case "all dead":
+        alert("Dear friend, all your population are dead. Game is over, have fun and good luck next time");
+        break;
+      case "stable configuration":
+        alert("Dear friend, your last configuration has a loop. Game is over, have fun and good luck next time");
+        break;
+      case "periodic configuration":
+        alert("Dear friend, one of your configuration has loop. Game is over, have fun and good luck next time");
+        break;
+      default:
+        alert("Game is over with no reasons. Please, restart the game");
+    }
+  };
+
+  checkGameState = (aliveCount, newStateTable) => {
+    const {stateTable, generation} = this.state;
+    
+    if (!aliveCount) {
+      this.animationToggle();
+      this.showMessage("all dead");
+    } else
+    if (JSON.stringify(stateTable) === JSON.stringify(newStateTable)) {
+      this.animationToggle();
+      this.showMessage("stable configuration");
+    } else
+    for (let i = 0; i < generation.length; i++) {
+      if (JSON.stringify(generation[i]) === JSON.stringify(newStateTable)) {
+        this.animationToggle();
+        this.showMessage("periodic configuration");
+      }  
+    }
+  };
+
+  //Генерирует новое поколение через 1 секунду
+  getNextState = () => {
+    const {rows, cols, stateTable, generation} = this.state;
+    const newStateTable = JSON.parse(JSON.stringify(stateTable));
+    let aliveCount = 0;
+    
+    for (let i = 0; i < rows; i++) {
+      for (let j = 0; j < cols; j++) {
+        let count = 0;
+        i > 0 && stateTable[i-1][j] && count++;
+        (i > 0 && j > 0) && stateTable[i - 1][j - 1] && count++;
+        (i > 0 && j < cols - 1) && stateTable[i - 1][j + 1] && count++;
+        (j < cols - 1) && stateTable[i][j + 1] && count++;
+        j > 0 && stateTable[i][j - 1] && count++;
+        (i < rows - 1) && stateTable[i + 1][j] && count++;
+        (i < rows - 1 && j > 0) && stateTable[i + 1][j - 1] && count++;
+        (i < rows - 1 && j < cols - 1) && stateTable[i + 1][j + 1] && count++;
+        stateTable[i][j] && aliveCount++;
+        if (stateTable[i][j] && (count < 2 || count > 3)) {
+          newStateTable[i][j] = false;
+        }
+        if (!stateTable[i][j] && (count === 3)) {
+          newStateTable[i][j] = true;
+        }
+      }
+    }
+    
+    this.checkGameState(aliveCount, newStateTable);
+    generation.push(newStateTable);
+    this.setState ({
+      stateTable: newStateTable
+    })
+  };
+
+  //Запускает\Останавливает игру по клику по кнопке
+  animationToggle = () => {
+    const {isAnimate} = this.state;
+    const animationSpeed = 1000;
+    
+    if (isAnimate) {
+      clearInterval(this.timer);
+      this.setState ({isAnimate: false, generation: []});
+    } else {
+      this.setState ({isAnimate: true});
+      this.timer = setInterval(this.getNextState, animationSpeed);
+    }
+  };
+
   //Toggle cell state (dead/alive) by mouse click
   changeCellState = (row, col) => {
     const {stateTable} = this.state;
@@ -148,30 +193,22 @@ class App extends Component {
   };
 
   render() {
-    const {rows, cols, isNewGame, stateTable, isHidden, isNewField, isSaveGame, isLoadGame} = this.state;
+    const {isNewGame, isHidden, isNewField, isSaveGame, isLoadGame, rows, cols, stateTable} = this.state;
     isNewGame && this.generateStateTable();
     
     return (
       <div className="app">
         <main className="main app__main">
           <Menu
-            rows={rows}
-            cols={cols}
-            stateTable={stateTable}
-            generateState={this.generateState}
-            resetGameField={this.resetGameField}
             isHidden={isHidden}
             isNewField={isNewField}
             isSaveGame={isSaveGame}
             isLoadGame={isLoadGame}
-            rowsHandler={this.rowsHandler}
-            colsHandler={this.colsHandler}
-            newFieldHandler={this.newFieldHandler}
-            saveGameHandler={this.saveGameHandler}
+            showModal={this.showModal}
+            resetGameField={this.resetGameField}
             saveNewGame={this.saveNewGame}
-            loadGameHandler={this.loadGameHandler}
-            gameNameHandler={this.gameNameHandler}
             loadSelectedGame={this.loadSelectedGame}
+            animationToggle={this.animationToggle}
           />
           <Game 
             rows={rows}

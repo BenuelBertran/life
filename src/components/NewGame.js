@@ -4,7 +4,18 @@ import Button from "./Button.js";
 import '../styles/index.scss';
 
 const NewGame = (props) => {
-  const {rowsHandler, colsHandler, resetGameField} = props;
+  let rows, cols;
+  const rowsHandler = (e) => {
+    rows = +e.currentTarget.value;
+  };
+  const colsHandler = (e) => {
+    cols = +e.currentTarget.value;
+  };
+  
+  const {resetGameField} = props;
+  const resetFieldHandler = () => {
+    resetGameField(rows, cols);
+  };
   
   return (
     <div className="modal game__modal">
@@ -22,15 +33,13 @@ const NewGame = (props) => {
         className="btn settings__btn"
         name="apply"
         value="Ok"
-        callback={resetGameField}
+        callback={resetFieldHandler}
       />
     </div>
   );
 };
 
 NewGame.propTypes = {
-  rowsHandler: PropTypes.func.isRequired,
-  colsHandler: PropTypes.func.isRequired,
   resetGameField: PropTypes.func.isRequired
 };
 

@@ -4,8 +4,16 @@ import Button from "./Button.js";
 import '../styles/index.scss';
 
 const NewGame = (props) => {
-  const {gameNameHandler, saveNewGame} = props;
+  let gameName;
+  const gameNameHandler = (e) => {  
+    gameName = e.currentTarget.value;
+  };
   
+  const {saveNewGame} = props;
+  const saveGameHandler = () => {
+    saveNewGame(gameName);
+  };
+
   return (
     <div className="modal game__modal">
       <input className="game__input" name="saveGame" type="text" placeholder="New save" onChange={gameNameHandler}></input>
@@ -13,14 +21,13 @@ const NewGame = (props) => {
         className="btn game__btn"
         name="save"
         value="save"
-        callback={saveNewGame}
+        callback={saveGameHandler}
       />
     </div>
   );
 };
 
 NewGame.propTypes = {
-  gameNameHandler: PropTypes.func.isRequired,
   saveNewGame: PropTypes.func.isRequired
 };
 
