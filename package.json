@@ -2,6 +2,7 @@
   "name": "life",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://benuelbertran.github.io/life",
   
   "dependencies": {
     "node-sass": "^4.11.0",
